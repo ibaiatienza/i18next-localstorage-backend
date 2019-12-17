@@ -64,7 +64,7 @@ class Cache {
         local.i18nStamp && local.i18nStamp + this.options.expirationTime > nowMS
 
         // there should be no language version set, or if it is, it should match the one in translation
-        && this.options.versions[language] === local.i18nVersion
+        && (this.options.versions[language][namespace] && this.options.versions[language][namespace] === local.i18nVersion)
       ) {
         delete local.i18nVersion;
         delete local.i18nStamp;
@@ -80,8 +80,8 @@ class Cache {
       data.i18nStamp = new Date().getTime();
 
       // language version (if set)
-      if (this.options.versions[language]) {
-        data.i18nVersion = this.options.versions[language];
+      if (this.options.versions[language][namespace]) {
+        data.i18nVersion = this.options.versions[language][namespace];
       }
 
       // save

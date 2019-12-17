@@ -141,7 +141,7 @@
 
           if ( // expiration field is mandatory, and should not be expired
           local.i18nStamp && local.i18nStamp + this.options.expirationTime > nowMS // there should be no language version set, or if it is, it should match the one in translation
-          && this.options.versions[language] === local.i18nVersion) {
+          && this.options.versions[language][namespace] && this.options.versions[language][namespace] === local.i18nVersion) {
             delete local.i18nVersion;
             delete local.i18nStamp;
             return callback(null, local);
@@ -156,8 +156,8 @@
         if (this.storage.store) {
           data.i18nStamp = new Date().getTime(); // language version (if set)
 
-          if (this.options.versions[language]) {
-            data.i18nVersion = this.options.versions[language];
+          if (this.options.versions[language][namespace]) {
+            data.i18nVersion = this.options.versions[language][namespace];
           } // save
 
 
